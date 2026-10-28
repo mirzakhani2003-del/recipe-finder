@@ -2,6 +2,7 @@ import { RecipeFilter } from "@/types/RecipeFilter";
 import { SearchResponse } from "@/types/SearchResponse";
 import Link from "next/link";
 import RecipeCard from "@/components/RecipeCard";
+import { RecipesResult } from "@/types/RecipesResult";
 
 const PAGE_SIZE = 6;
 
@@ -39,13 +40,15 @@ const sortOptions = [
   { value: "time", label: "Quickest first" },
 ];
 
-const getRecipes = async (
-  filters: RecipeFilter,
-): Promise<SearchResponse | null> => {
+const getRecipes = async (filters: RecipeFilter): Promise<RecipesResult> => {
   const apiKey = process.env.SPOONACULAR_API_KEY;
 
   if (!apiKey) {
-    return null;
+    return {
+      success: false,
+      message: "Spoonacular API Key is not configured",
+      status: 500,
+    };
   }
 
   const apiUrl = new URL("https://api.spoonacular.com/recipes/complexSearch");
@@ -82,7 +85,20 @@ const getRecipes = async (
     const response = await fetch(apiUrl, { cache: "no-store" });
 
     if (!response.ok) {
-      return null;
+      if (response.status === 402) {
+        return {
+          success: false,
+          message:
+            "Your daily points limit of 50 has been reached. Please upgrade your plan to continue using the API.",
+          status: response.status,
+        };
+      }
+
+      return {
+        success: false,
+        message: "Failed to fetch recipe from Spoonacular.",
+        status: response.status,
+      };
     }
 
     const data = (await response.json()) as SearchResponse;
@@ -93,9 +109,13 @@ const getRecipes = async (
       );
     }
 
-    return data;
+    return { success: true, data: data };
   } catch {
-    return null;
+    return {
+      success: false,
+      message: "Failed to fetch recipe from Spoonacular.",
+      status: 502,
+    };
   }
 };
 
@@ -111,7 +131,9 @@ const RecipesPage = async ({ searchParams }: RecipesPageProps) => {
   const page =
     Number.isFinite(requestPage) && requestPage > 0 ? requestPage : 1;
 
-  const data = await getRecipes({ query, cuisine, diet, sort, page });
+  const result = await getRecipes({ query, cuisine, diet, sort, page });
+
+  const data = result.success ? result.data : null;
 
   const recipes = data?.results ?? [];
 
@@ -280,14 +302,19 @@ const RecipesPage = async ({ searchParams }: RecipesPageProps) => {
           </form>
         </div>
 
-        {!data ? (
+        {!result.success ? (
           <div className="rounded-2xl border border-border bg-surface px-6 py-16 text-center">
             <h2 className="text-xl font-semibold text-foreground">
               Unable to load recipes
             </h2>
-            <p className="mt-3 text-muted-foreground">
-              Please try again in a moment.
-            </p>
+            <p className="mt-3 text-muted-foreground">{result.message}</p>
+            <p className="text-muted-foreground">{result.status}</p>
+            <Link
+              href="/"
+              className="mt-6 inline-flex rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+            >
+              Back to Home
+            </Link>
           </div>
         ) : recipes.length === 0 ? (
           <div className="rounded-2xl border border-border bg-surface px-6 py-16 text-center">
