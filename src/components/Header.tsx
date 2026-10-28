@@ -46,13 +46,19 @@ const Header = () => {
           type="button"
           onClick={() => setIsMenuOpen((open) => !open)}
           className="rounded-lg p-2 text-foreground transition-colors hover:bg-surface-hover md:hidden"
+          aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
+          aria-controls="mobile-navigation"
+          aria-expanded={isMenuOpen}
         >
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {isMenuOpen && (
-        <nav className="border-t border-border bg-background px-5 py-4 md:hidden">
+        <nav
+          id="mobile-navigation"
+          className="border-t border-border bg-background px-5 py-4 md:hidden"
+        >
           <div className="mx-auto max-w-7xl flex flex-col gap-1">
             <Link
               href="/"
