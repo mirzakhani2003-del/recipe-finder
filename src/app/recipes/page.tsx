@@ -79,8 +79,6 @@ const getRecipes = async (filters: RecipeFilter): Promise<RecipesResult> => {
   apiUrl.searchParams.set("addRecipeInformation", "true");
   apiUrl.searchParams.set("apiKey", apiKey);
 
-  console.log(apiUrl);
-
   try {
     const response = await fetch(apiUrl, { cache: "no-store" });
 
