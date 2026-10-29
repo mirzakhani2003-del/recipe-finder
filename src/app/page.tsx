@@ -23,6 +23,7 @@ const categories = [
     query: "quick meals",
   },
 ];
+
 export default function Home() {
   return (
     <div>
@@ -76,7 +77,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-surface py-14 sm:py-16">
+      <section className="py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-5">
           <div className="mb-8">
             <div className="space-y-2">

@@ -3,12 +3,13 @@
 import { ChefHat, Heart, House, Info, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border border-border bg-background">
+    <header className="sticky top-0 z-50 border border-border bg-surface">
       <div className="mx-auto max-w-7xl flex items-center justify-between px-5 py-4">
         <Link
           href="/"
@@ -42,16 +43,20 @@ const Header = () => {
           </Link>
         </nav>
 
-        <button
-          type="button"
-          onClick={() => setIsMenuOpen((open) => !open)}
-          className="rounded-lg p-2 text-foreground transition-colors hover:bg-surface-hover md:hidden"
-          aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-          aria-controls="mobile-navigation"
-          aria-expanded={isMenuOpen}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            className="rounded-lg p-2 text-foreground transition-colors hover:bg-surface-hover md:hidden"
+            aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
+            aria-controls="mobile-navigation"
+            aria-expanded={isMenuOpen}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {isMenuOpen && (

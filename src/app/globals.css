@@ -62,7 +62,7 @@
 }
 
 /* Dark theme */
-.dark {
+[data-theme="dark"] {
   color-scheme: dark;
 
   --primary: #fb923c;
