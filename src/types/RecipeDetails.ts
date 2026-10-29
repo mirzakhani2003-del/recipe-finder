@@ -13,7 +13,7 @@ export type RecipeDetails = {
   title: string;
   image: string;
   summary?: string;
-  readyInMinutes?: string;
+  readyInMinutes?: number;
   servings: number;
   cuisines?: string[];
   extendedIngredients?: RecipeIngredient[];

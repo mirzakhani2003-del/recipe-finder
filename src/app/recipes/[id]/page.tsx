@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 import Image from "next/image";
+import FavoriteButton from "@/components/FavoriteButton";
 
 type RecipeDetailsPageProps = {
   params: Promise<{ id: string }>;
@@ -210,6 +211,17 @@ const RecipeDetailsPage = async ({
                         </p>
                       </div>
                     </div>
+
+                    <FavoriteButton
+                      recipe={{
+                        id: recipe.id,
+                        title: recipe.title,
+                        image: recipe.image,
+                        readyInMinutes: recipe.readyInMinutes ?? null,
+                        servings: recipe.servings,
+                        cuisines: recipe.cuisines ?? [],
+                      }}
+                    />
                   </div>
                 </div>
 
