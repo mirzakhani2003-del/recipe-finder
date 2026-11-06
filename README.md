@@ -2,6 +2,10 @@
 
 A responsive recipe discovery application built with Next.js, TypeScript, and Tailwind CSS. Search for recipes, explore cooking instructions, and save your favorite meals in one place.
 
+## 🚀 Live Demo
+
+**[View Live Website](https://recipe-finder-ecru-tau.vercel.app/)**
+
 ## Features
 
 - 🔍 Search recipes by name or ingredients
