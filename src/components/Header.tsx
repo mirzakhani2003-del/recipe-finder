@@ -73,14 +73,14 @@ const Header = () => {
               Home
             </Link>
             <Link
-              href="/"
+              href="/favorites"
               className="flex items-center gap-2 font-medium text-foreground transition-colors hover:text-primary"
             >
               <Heart size={18} />
               Favorites
             </Link>
             <Link
-              href="/"
+              href="/about"
               className="flex items-center gap-2 font-medium text-foreground transition-colors hover:text-primary"
             >
               <Info size={18} />
