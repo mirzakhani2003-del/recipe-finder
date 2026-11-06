@@ -99,7 +99,7 @@ export default function Home() {
             {categories.map((item) => (
               <Link
                 key={item.title}
-                href={`recipes?query${encodeURIComponent(item.query)}`}
+                href={`recipes?query=${encodeURIComponent(item.query)}`}
                 className="group overflow-hidden border border-border rounded-2xl bg-background transition-all hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="overflow-hidden">
